@@ -103,15 +103,18 @@ export default function Dashboard() {
 
   const handleLogout = async () => {
     try {
+      // 1. Tell the backend to destroy the cookie
       await api.post("/auth/logout");
-      localStorage.removeItem("userRole");
-      toast.success("Logged out successfully");
-      setTimeout(() => navigate("/login"), 500);
-    } catch {
-      toast.error("Logout failed");
+
+      setUser(null);
+      setIsAuthenticated(false);
+
+      // 3. Redirect to login
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed", error);
     }
   };
-
   const statusIcon = (status) => {
     if (status === "completed")
       return <FiCheckCircle className="text-emerald-400" />;
