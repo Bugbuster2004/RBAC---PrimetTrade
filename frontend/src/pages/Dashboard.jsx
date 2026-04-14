@@ -26,7 +26,12 @@ export default function Dashboard() {
   const isAdmin = userRole === "admin";
 
   useEffect(() => {
-    fetchTasks();
+    const role = localStorage.getItem("userRole");
+    if (!role) {
+      navigate("/login");
+    } else {
+      fetchTasks();
+    }
   }, []);
 
   const fetchTasks = async () => {
@@ -106,13 +111,17 @@ export default function Dashboard() {
       // 1. Tell the backend to destroy the cookie
       await api.post("/auth/logout");
 
-      setUser(null);
-      setIsAuthenticated(false);
+      // 2. Clear local storage so the frontend knows the session is over
+      localStorage.removeItem("userRole");
 
       // 3. Redirect to login
       navigate("/login");
     } catch (error) {
       console.error("Logout failed", error);
+      // Even if the API call fails, we should still clear local storage
+      // and redirect to ensure the user isn't "stuck"
+      localStorage.removeItem("userRole");
+      navigate("/login");
     }
   };
   const statusIcon = (status) => {
