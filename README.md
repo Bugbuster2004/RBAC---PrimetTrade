@@ -1,3 +1,16 @@
+## ⚠️ Deployment Note
+
+- The backend is deployed on Render (free tier). It may go idle after **15 minutes of inactivity**.
+- When you access it after being idle, **please wait 2–3 minutes** for the server to spin up again.
+- Since the project is on a free tier, **cookie operations (like login/logout)** may take a little extra time—especially while removing cookies.
+
+### 🔗 Live Links
+
+- **Frontend:** https://rbac-primet-trade.vercel.app/login
+- **Swagger API Docs:** https://primetrade-api-qkpr.onrender.com/api-docs/
+
+---
+
 # RBAC — PrimeTrade
 
 A scalable REST API with JWT-based authentication, role-based access control, and Redis caching, built as part of the PrimeTrade Backend Developer Intern assignment.
@@ -24,7 +37,6 @@ This project implements a full-stack web application with the following capabili
 - Role-based access control with two strict roles: `user` and `admin`.
 - CRUD operations on a secondary entity (Tasks) with strict ownership validation.
 - API versioning under `/api/v1`.
-- Security measures including NoSQL injection prevention and cross-site scripting (XSS) sanitization.
 - Redis-based caching layer for optimized database querying and performance.
 - A React frontend utilizing Vite that consumes the API and dynamically renders based on user roles.
 
@@ -37,7 +49,6 @@ This project implements a full-stack web application with the following capabili
 | **Database**  | MongoDB                                        |
 | **ORM**       | Mongoose                                       |
 | **Auth**      | JSON Web Tokens (HTTP-Only Cookies) + bcryptjs |
-| **Security**  | express-mongo-sanitize, xss-clean, cors        |
 | **Cache**     | Redis                                          |
 | **Frontend**  | React.js (Vite), React Router, Axios           |
 | **API Docs**  | Swagger UI (swagger-jsdoc)                     |
@@ -99,6 +110,9 @@ JWT_SECRET=your_highly_secure_jwt_secret
 
 # Frontend Integration
 FRONTEND_URL=http://localhost:5173
+
+# Redis Integration
+REDIS_URL = your redis url
 ```
 
 ## Getting Started
@@ -112,15 +126,20 @@ FRONTEND_URL=http://localhost:5173
 ### Backend Setup
 
 1. Navigate to the backend directory:
+
    ```bash
    cd backend
    ```
+
 2. Install dependencies:
+
    ```bash
    npm install
    ```
+
 3. Create a `.env` file based on the environment variables structure provided above.
 4. Start the development server:
+
    ```bash
    npm run dev
    ```
@@ -128,14 +147,19 @@ FRONTEND_URL=http://localhost:5173
 ### Frontend Setup
 
 1. Navigate to the frontend directory:
+
    ```bash
    cd frontend
    ```
+
 2. Install dependencies:
+
    ```bash
    npm install
    ```
+
 3. Start the Vite development server:
+
    ```bash
    npm run dev
    ```
